@@ -21,15 +21,16 @@ def get_direction_step(direction):
     Returns:
         vertical_step, horizontal_step: Two values representing the direction step
     """
-    # TODO: STEP #1: Implement get_direction_step() function
-    # - Check if direction is 'w' (up) - return -1, 0
-    # - Check if direction is 'a' (left) - return 0, -1
-    # - Check if direction is 's' (down) - return 1, 0
-    # - Check if direction is 'd' (right) - return 0, 1
-    # - For any other direction, return 0, 0
-    
-    # Temporary: Return default values so game can run (player won't move until implemented)
-    return 0, 0
+    if direction == 'w':
+        return -1, 0
+    elif direction == 'a':
+        return 0, -1
+    elif direction == 's':
+        return 1, 0
+    elif direction == 'd':
+        return 0, 1
+    else:
+        return 0, 0
 
 
 # ============================================================================
@@ -48,14 +49,17 @@ def is_valid_move(board, row, col):
     Returns:
         bool: True if valid move, False otherwise
     """
-    # TODO: STEP #2: Implement is_valid_move() function
-    # - Check if row is within bounds (row >= 0 and row < len(board))
-    # - Check if col is within bounds (col >= 0 and col < len(board[row]))
-    # - Check if cell is not a wall (board[row][col] != '#')
-    # - Return True if all checks pass, False otherwise
-    
-    # Temporary: Return False so player cannot move until function is implemented
-    return False
+    row_in_bounds = False
+    col_in_bounds = False
+    cell_is_wall = True
+    if row >= 0 and row < len(board):
+        row_in_bounds = True
+    if col >= 0 and col < len(board[row]):
+        col_in_bounds = True
+    if board[row][col] != '#':
+        cell_is_wall = False
+
+    return row_in_bounds and col_in_bounds and not cell_is_wall
 
 
 # ============================================================================
@@ -73,22 +77,35 @@ def move_player(board, direction):
     Returns:
         bool: True if moved, False if blocked
     """
-    # TODO: STEP #3: Implement move_player() function
-    # - Get player position using get_player_position(board)
-    # - If player position is None, return False
-    # - Get direction step using get_direction_step(direction)
-    # - Calculate target position (player_row + vertical_step, player_col + horizontal_step)
-    # - Check if move is valid using is_valid_move(board, target_row, target_col)
-    # - If not valid, return False
-    # - Get current cell value (board[player_row][player_col])
-    # - Get target cell value (board[target_row][target_col])
-    # - Update current cell: '@' -> ' ', '+' -> '.'
-    # - Update target cell: ' ' -> '@', '.' -> '+'
-    # - Return True if move was successful
-    
-    # Temporary: Return False so player cannot move until function is implemented
-    return False
+    player_pos = get_player_position(board)
 
+    if player_pos == None:
+        return False
+    
+    player_row, player_column = player_pos
+
+    vertical_step, horizontal_step = get_direction_step(direction)
+
+    target_row, target_column = player_row + vertical_step, player_column + horizontal_step
+    move_validity = is_valid_move(board, target_row, target_column)
+
+    if move_validity == False:
+        return False
+    
+    current_cell = board[player_row][player_column]
+    target_cell = board[target_row][target_column]
+
+    if current_cell == '@':
+        board[player_row][player_column] = ' '
+    elif current_cell == '+':
+        board[player_row][player_column] = '.'
+
+    if target_cell == ' ':
+        board[target_row][target_column] = '@'
+    elif target_cell == '.':
+        board[target_row][target_column] = '+'
+    
+    return True
 
 def play_single_level(level_number):
     """
