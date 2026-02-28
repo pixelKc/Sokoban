@@ -136,6 +136,7 @@ def print_controls():
     print("\nControls:")
     print("  ↑↓←→ or W/A/S/D - Move player")
     print("  R - Restart level")
+    print("  U - Undo last move (up to 10 moves)")
     print("  Q - Quit game")
     print()
 

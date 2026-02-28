@@ -100,20 +100,19 @@ def get_player_position(board):
 
 def is_win(board):
     """
-    Check if player is on the target location.
-    Week 17: Simple win condition - player reaches the single target.
+    Check if all boxes are on target locations.
 
     Args:
         board: 2D list representing game state
 
     Returns:
-        bool: True if player is on target ('+' symbol), False otherwise
+        bool: True if level complete (no '$' symbols), False otherwise
     """
     for row in board:
         for cell in row:
-            if cell == '+':  # Player on target
-                return True
-    return False
+            if cell == '$':  # Box not on target
+                return False
+    return True
 
 
 def copy_board(board):

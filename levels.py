@@ -67,19 +67,19 @@ def load_xsb_level(filename):
 def get_level(level_number):
     """
     Get the board layout for a specific level.
-    Loads from XSB format files (maze000.xsb through maze004.xsb).
+    Loads from XSB format files (level000.xsb through level050.xsb).
 
     Args:
-        level_number: Integer 0-4
+        level_number: Integer 0-50
 
     Returns:
         2D list: Board layout for the level, or None if invalid
     """
-    if level_number < 0 or level_number > 4:
+    if level_number < 0 or level_number > 50:
         return None
     
-    # Format filename as maze000.xsb, maze001.xsb, etc.
-    filename = f"maze{level_number:03d}.xsb"
+    # Format filename as level000.xsb, level001.xsb, etc.
+    filename = f"level{level_number:03d}.xsb"
     return load_xsb_level(filename)
 
 
@@ -88,7 +88,7 @@ def get_total_levels():
     Get the total number of available levels.
 
     Returns:
-        int: Total number of levels (5)
+        int: Total number of levels (51)
     """
-    return 5
+    return 51
 
